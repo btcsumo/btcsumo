@@ -18,7 +18,10 @@ $sage_includes = [
   'lib/assets.php',                // Scripts and stylesheets
   'lib/titles.php',                // Page titles
   'lib/extras.php',                // Custom functions
-  'lib/wp_bootstrap_navwalker.php'
+  'lib/wp-bs-navwalker.php',       // WordPress bootstrap nav walker
+  'lib/custom-post-types.php',     // Custom Post Types registration
+  'lib/custom-fields.php',         // Custom Fields for all post types
+  'lib/feeds.php'                  // Get the requested feed items
 ];
 
 foreach ($sage_includes as $file) {

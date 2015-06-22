@@ -1,0 +1,63 @@
+.feed-boxes {
+  display: flex;
+  display: -ms-flexbox; /*IE10*/
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap; /*IE10*/
+  -webkit-flex-wrap: wrap;
+
+  .feed-box {
+
+    .feed-refresh {
+      @include transition(opacity 0.25s);
+      cursor: pointer;
+      float: right;
+      opacity: 0.25;
+    }
+    .feed-refresh:hover {
+      opacity: 1;
+    }
+
+    .feed-item {
+      padding: 0;
+
+      a {
+        cursor: pointer;
+        display: block;
+        margin: 0;
+        padding: 5px 10px;
+      }
+
+      .feed-item-date {
+        background-color: #eee;
+        color: #000;
+        float: right;
+      }
+    }
+
+    .load-more {
+      padding: 0;
+      margin: 0;
+
+      .row {
+        padding: 0;
+        margin: 0;
+      }
+
+      a {
+        text-align: center;
+        cursor: pointer;
+        display: block;
+        margin: 0;
+        padding: 5px 10px;
+      }
+      a:hover {
+        background-color: rgba(0,0,0,0.05);
+      }
+      a.disabled {
+        color: rgba(0,0,0,0.5);
+      }
+    }
+
+  }
+}

@@ -31,3 +31,15 @@ function excerpt_more() {
   return ' &hellip; <a href="' . get_permalink() . '">' . __('Continued', 'sage') . '</a>';
 }
 add_filter('excerpt_more', __NAMESPACE__ . '\\excerpt_more');
+
+/**
+ * Add ajaxurl variable to use AJAX on front-end.
+ */
+function ajaxurl() {
+  ?>
+  <script>
+    var ajaxurl = '<?= admin_url( 'admin-ajax.php' ); ?>';
+  </script>
+  <?php
+}
+add_action('wp_head', __NAMESPACE__ . '\\ajaxurl');
