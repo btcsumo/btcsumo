@@ -1,8 +1,6 @@
 <?php
 /**
- * Template Name: Feeds
- *
- * This is the template for the front page, showing all the feed boxes.
+ * This is the front page, showing all the feed boxes.
  */
 
 // Get all the active feeds.
