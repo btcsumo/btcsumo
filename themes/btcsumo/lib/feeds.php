@@ -49,11 +49,11 @@ function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
 /**
  * Change the default feed cache recreation period.
  * @param  integer $seconds How many seconds to keep the cache for.
- * @return integer          Keep for 1 minutes.
+ * @return integer          Keep for 1 minute.
  * @todo   Change time.
  */
 function cache_lifetime( $seconds ) {
-  return 60 * MINUTE_IN_SECONDS;
+  return ( defined( 'BTCSUMO_FEED_CACHE_LIFETIME' ) ) ? BTCSUMO_FEED_CACHE_LIFETIME : MINUTE_IN_SECONDS;
 }
 
 /**
