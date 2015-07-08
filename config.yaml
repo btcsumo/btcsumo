@@ -1,2 +1,15 @@
+# Domain name to use for Vagrant
 hosts:
     - btcsumo.local
+
+# Database configuration
+database:
+    name: btcsumo
+    user: sumo
+    password: sumo
+
+# Admin configuration
+admin:
+    user: sumo
+    email: btcsumo@example.com
+    password: sumo
