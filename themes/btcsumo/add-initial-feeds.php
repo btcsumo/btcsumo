@@ -182,7 +182,7 @@ for ( $i = 0; $i < count( $feeds_arr ); $i += 3 ) {
   );
 
   if ( $post_id = wp_insert_post( $post, false ) ) {
-    add_post_meta( $post_id, 'feed-active', true );
+    add_post_meta( $post_id, 'feed-active', count( $inserted_items ) < 7 );
     add_post_meta( $post_id, 'feed-site-url', $site_url );
     add_post_meta( $post_id, 'feed-feed-url', $feed_url );
     $inserted_items[ $post_id ] = $title;
