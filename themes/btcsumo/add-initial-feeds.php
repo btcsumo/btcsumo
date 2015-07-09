@@ -163,7 +163,7 @@ $skipped_items = [];
 $failed_items = [];
 
 for ( $i = 0; $i < count( $feeds_arr ); $i += 3 ) {
-  $title    = $feeds_arr[ $i ];
+  $title = $feeds_arr[ $i ];
 
   if ( $post = get_page_by_title( $title, OBJECT, 'feeds' ) ) {
     $skipped_items[ $post->ID ] = $title;
@@ -192,8 +192,3 @@ for ( $i = 0; $i < count( $feeds_arr ); $i += 3 ) {
 }
 
 wp_die( sprintf( 'Inserted Items: %d<br>Skipped Items: %d<br>Failed Items: %d<br><br><a href="%s">Home</a>', count( $inserted_items ), count( $skipped_items ), count( $failed_items ), home_url() ) );
-
-?>
-
-
-

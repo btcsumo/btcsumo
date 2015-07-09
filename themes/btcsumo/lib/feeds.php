@@ -4,10 +4,11 @@ namespace BTCSumo\Feeds;
 
 /**
  * Fetch the items from a certain feed URL.
- * @param  string  $url   Feed URL to load the items from.
- * @param  integer $count The number of items to fetch.
- * @param  integer $start Get items starting from this number.
- * @return object         The fetched items if available.
+ * @param  string  $url       Feed URL to load the items from.
+ * @param  integer $count     The number of items to fetch.
+ * @param  integer $start     Get items starting from this number.
+ * @param  boolean &$has_more Assign if there are more items to be fetched after this call.
+ * @return object             The fetched items if available.
  */
 function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
 
@@ -48,11 +49,9 @@ function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
 
 /**
  * Change the default feed cache recreation period.
- * @param  integer $seconds How many seconds to keep the cache for.
- * @return integer          Keep for 1 minute.
- * @todo   Change time.
+ * @return integer Keep for 1 minute or however long is defined in BTCSUMO_FEED_CACHE_LIFETIME.
  */
-function cache_lifetime( $seconds ) {
+function cache_lifetime() {
   return ( defined( 'BTCSUMO_FEED_CACHE_LIFETIME' ) ) ? BTCSUMO_FEED_CACHE_LIFETIME : MINUTE_IN_SECONDS;
 }
 
@@ -113,5 +112,3 @@ function ajax_fetch_feed_items() {
 // The private one (top) is necessary to make it work when we're logged in.
 add_action( 'wp_ajax_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
 add_action( 'wp_ajax_nopriv_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
-
-?>
