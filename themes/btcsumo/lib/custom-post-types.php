@@ -7,7 +7,7 @@ namespace BTCSumo\CustomPostTypes;
  * @since 1.0.0
  */
 function setup() {
-  add_action(  'init', __NAMESPACE__ . '\\feeds_cpt'  );
+  add_action( 'init', __NAMESPACE__ . '\\feeds_cpt' );
 }
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\setup' );
 

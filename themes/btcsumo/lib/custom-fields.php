@@ -79,12 +79,12 @@ function feeds_mb_save( $post_id ) {
   }
 
   /// Check if the current user has permission to edit the post.
-  if( ! current_user_can( 'edit_post', $post_id ) ) {
+  if ( ! current_user_can( 'edit_post', $post_id ) ) {
     return $post_id;
   }
 
   // Check if this is and auto save.
-  if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
     return $post_id;
   }
 
