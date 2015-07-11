@@ -4,16 +4,15 @@ namespace BTCSumo\CustomPostTypes;
 
 /**
  * Add all Custom Post Types.
+ * @since 1.0.0
  */
-
 function setup() {
-  add_action(  'init', __NAMESPACE__ . '\\feeds_cpt'  );
+  add_action( 'init', __NAMESPACE__ . '\\feeds_cpt' );
 }
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\setup' );
 
 /**
- * "feeds" Custom Post Type.
- *
+ * Register feeds Custom Post Type.
  * @since 1.0.0
  */
 function feeds_cpt() {
@@ -35,16 +34,13 @@ function feeds_cpt() {
   ];
 
   $args = [
-    'has_archive' => true,
-    'labels'      => $labels,
-    'menu_icon'   => 'dashicons-admin-home',
-    'public'      => true,
-     'publicly_queryable' => false,
-    'supports'    => [ 'title', 'thumbnail' ]
+    'has_archive'        => true,
+    'labels'             => $labels,
+    'menu_icon'          => 'dashicons-admin-home',
+    'public'             => true,
+    'publicly_queryable' => false,
+    'supports'           => [ 'title', 'thumbnail' ]
   ];
 
   register_post_type( 'feeds', $args );
 }
-
-
-?>

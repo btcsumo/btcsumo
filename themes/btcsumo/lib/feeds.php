@@ -4,17 +4,18 @@ namespace BTCSumo\Feeds;
 
 /**
  * Fetch the items from a certain feed URL.
- * @param  string  $url   Feed URL to load the items from.
- * @param  integer $count The number of items to fetch.
- * @param  integer $start Get items starting from this number.
- * @return object         The fetched items if available.
+ * @param  string  $url       Feed URL to load the items from.
+ * @param  integer $count     The number of items to fetch.
+ * @param  integer $start     Get items starting from this number.
+ * @param  boolean &$has_more Assign if there are more items to be fetched after this call.
+ * @return object             The fetched items if available.
  */
 function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
 
   // Set the lifetime transient before fetching the feeds and reset it again afterwards.
-  add_filter( 'wp_feed_cache_transient_lifetime' , __NAMESPACE__ . '\\cache_lifetime' );
+  add_filter( 'wp_feed_cache_transient_lifetime', __NAMESPACE__ . '\\cache_lifetime' );
   $feed = fetch_feed( esc_url( $url ) );
-  remove_filter( 'wp_feed_cache_transient_lifetime' , __NAMESPACE__ . '\\cache_lifetime' );
+  remove_filter( 'wp_feed_cache_transient_lifetime', __NAMESPACE__ . '\\cache_lifetime' );
 
   // The variable containing all the feed items.
   $feed_items = null;
@@ -36,7 +37,7 @@ function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
       $new_feed_item = [
         'title'      => esc_html( $feed_item->get_title() ),
         'permalink'  => esc_url( $feed_item->get_permalink() ),
-        'date'       => $feed_item->get_date( 'j M'),
+        'date'       => $feed_item->get_date( 'j M' ),
         'date_title' => $feed_item->get_date( 'j F Y, H:i:s' )
       ];
       $feed_items[] = (object) $new_feed_item;
@@ -48,11 +49,9 @@ function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
 
 /**
  * Change the default feed cache recreation period.
- * @param  integer $seconds How many seconds to keep the cache for.
- * @return integer          Keep for 1 minute.
- * @todo   Change time.
+ * @return integer Keep for 1 minute or however long is defined in BTCSUMO_FEED_CACHE_LIFETIME.
  */
-function cache_lifetime( $seconds ) {
+function cache_lifetime() {
   return ( defined( 'BTCSUMO_FEED_CACHE_LIFETIME' ) ) ? BTCSUMO_FEED_CACHE_LIFETIME : MINUTE_IN_SECONDS;
 }
 
@@ -87,11 +86,11 @@ function ajax_fetch_feed_items() {
   }
 
   if ( empty( $feed_items ) ) {
-    wp_send_json_success([
+    wp_send_json_success( [
       'has_more' => false,
       'message' => __( 'No Feed Items.', 'btcsumo' ),
       'items' => []
-    ]);
+    ] );
   }
 
   // Use the feed-item template to generate the list items and put them all into an array.
@@ -104,14 +103,12 @@ function ajax_fetch_feed_items() {
   }
 
   // Pass back the fetched feed items.
-  wp_send_json_success([
+  wp_send_json_success( [
     'has_more' => $has_more,
     'message'  => sprintf( _n( '%s Item loaded.', '%s Items loaded.', count( $feed_items ), 'btcsumo' ), count( $feed_items ) ),
     'items'    => $feed_items_html
-  ]);
+  ] );
 }
 // The private one (top) is necessary to make it work when we're logged in.
 add_action( 'wp_ajax_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
 add_action( 'wp_ajax_nopriv_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
-
-?>
