@@ -4,55 +4,26 @@ namespace BTCSumo\Feeds;
 
 /**
  * Fetch the items from a certain feed URL.
- * @param  string  $url       Feed URL to load the items from.
- * @param  integer $count     The number of items to fetch.
+ * @param  integer $feed_id   Feed ID to load the items from.
  * @param  integer $start     Get items starting from this number.
+ * @param  integer $count     The number of items to fetch.
  * @param  boolean &$has_more Assign if there are more items to be fetched after this call.
  * @return object             The fetched items if available.
  */
-function fetch_feed_items( $url, $count = 5, $start = 0, &$has_more = true ) {
-
-  // Set the lifetime transient before fetching the feeds and reset it again afterwards.
-  add_filter( 'wp_feed_cache_transient_lifetime', __NAMESPACE__ . '\\cache_lifetime' );
-  $feed = fetch_feed( esc_url( $url ) );
-  remove_filter( 'wp_feed_cache_transient_lifetime', __NAMESPACE__ . '\\cache_lifetime' );
-
-  // The variable containing all the feed items.
-  $feed_items = null;
-
-  // Make sure we have a valid feed.
-  if ( ! is_wp_error( $feed ) ) {
+function fetch_feed_items( $feed_id, $start = 0, $count = 5, &$has_more = true ) {
+  // Get the feed items from the feed meta data.
+  if ( $feed_items = get_post_meta( $feed_id, 'feed-feed-items', true ) ) {
 
     // Figure out how many total items there are.
     // We need this to determine if there are still more items to be loaded after this call.
-    $max_items = $feed->get_item_quantity();
+    $max_items = count( $feed_items );
     $has_more = ( $max_items > $start + $count );
 
     // Get $count feed items starting at $start.
-    $feed_items_raw = $feed->get_items( $start, $count );
-
-    // Prepare the feeds in a nice format.
-    $feed_items = [];
-    foreach ( $feed_items_raw as $feed_item ) {
-      $new_feed_item = [
-        'title'      => esc_html( $feed_item->get_title() ),
-        'permalink'  => esc_url( $feed_item->get_permalink() ),
-        'date'       => $feed_item->get_date( 'j M' ),
-        'date_title' => $feed_item->get_date( 'j F Y, H:i:s' )
-      ];
-      $feed_items[] = (object) $new_feed_item;
-    }
+    return array_slice( $feed_items, $start, $count );
   }
 
-  return $feed_items;
-}
-
-/**
- * Change the default feed cache recreation period.
- * @return integer Keep for 1 minute or however long is defined in BTCSUMO_FEED_CACHE_LIFETIME.
- */
-function cache_lifetime() {
-  return ( defined( 'BTCSUMO_FEED_CACHE_LIFETIME' ) ) ? BTCSUMO_FEED_CACHE_LIFETIME : MINUTE_IN_SECONDS;
+  return [];
 }
 
 /**
@@ -65,7 +36,7 @@ function ajax_fetch_feed_items() {
 
   // Make sure this call is allowed.
   if ( ! isset( $feed_nonce ) || ! wp_verify_nonce( $feed_nonce, 'ajax_fetch_feed_items_nonce' ) ) {
-    wp_send_json_error( __( 'Invalid call.', 'btcsumo' ) );
+    wp_send_json_error( __( 'Nonce check failed.', 'btcsumo' ) );
   }
 
   // Make sure we have a feed ID.
@@ -79,12 +50,13 @@ function ajax_fetch_feed_items() {
     wp_send_json_error( __( 'No Feed URL found.', 'btcsumo' ) );
   }
 
-  // Get the feed items and pass them back.
-  $feed_items = fetch_feed_items( $feed_url, $feed_count, $feed_start, $has_more );
+  // Get the feed items.
+  $feed_items = fetch_feed_items( $feed_id, $feed_start, $feed_count, $has_more );
   if ( ! isset( $feed_items ) ) {
     wp_send_json_error( __( 'Error while fetching Feed Items.', 'btcsumo' ) );
   }
 
+  // There are no feed items, even though the call was successful.
   if ( empty( $feed_items ) ) {
     wp_send_json_success( [
       'has_more' => false,
@@ -96,10 +68,7 @@ function ajax_fetch_feed_items() {
   // Use the feed-item template to generate the list items and put them all into an array.
   $feed_items_html = [];
   foreach ( $feed_items as $feed_item ) {
-    set_query_var( 'feed_item', $feed_item );
-    ob_start();
-    get_template_part( 'templates/feed', 'item' );
-    $feed_items_html[] = ob_get_clean();
+    $feed_items_html[] = render_feed_item( $feed_item, false );
   }
 
   // Pass back the fetched feed items.
@@ -112,3 +81,23 @@ function ajax_fetch_feed_items() {
 // The private one (top) is necessary to make it work when we're logged in.
 add_action( 'wp_ajax_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
 add_action( 'wp_ajax_nopriv_ajax_fetch_feed_items', __NAMESPACE__ . '\\ajax_fetch_feed_items' );
+
+/**
+ * Render an individual feed item. If the rendered content is requested, use the Output Buffer to return it.
+ * @param  object  $feed_item The feed item to be rendered.
+ * @param  boolean $echo      Output the rendered content or return it?
+ * @return string             If requested with $echo, the rendered content.
+ */
+function render_feed_item( $feed_item, $echo = true ) {
+  if ( ! $echo ) {
+    ob_start();
+  }
+
+  // Render the feed item.
+  set_query_var( 'feed_item', $feed_item );
+  get_template_part( 'templates/feed', 'item' );
+
+  if ( ! $echo ) {
+    return ob_get_clean();
+  }
+}
