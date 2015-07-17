@@ -22,11 +22,16 @@
       var count = parseInt( $feed_list.attr( 'data-feed-count') );
       var start = parseInt( $feed_list.attr( 'data-feed-start') );
 
+      // Get the "Older" and "Newer" buttons.
+      var $newer_button = $( '.load-newer', $feed_box );
+      var $older_button = $( '.load-older', $feed_box );
+
       // Adjust parameters for fetching items, depending on what we're doing.
       switch( what ) {
         case 'newer':
           if ( start <= 0 ) {
-            // We're already at the beginning, nothing to do.
+            // We're already at the beginning. Disable the button as this event shouldn't even occur.
+            $newer_button.addClass( 'disabled' );
             return;
           }
           start -= count;
@@ -38,10 +43,6 @@
           start = 0;
           break;
       }
-
-      // Get the "Older" and "Newer" buttons.
-      var $prev_button = $( '.load-newer', $feed_box );
-      var $next_button = $( '.load-older', $feed_box );
 
       // Make the AJAX request.
       $.post( ajaxurl, {
@@ -64,19 +65,20 @@
 
             // If there are no more items in the feed, disable the "Older" button.
             if ( ! response.data.has_more ) {
-              $next_button.addClass( 'disabled' );
+              $older_button.addClass( 'disabled' );
             } else {
-              $next_button.removeClass( 'disabled' );
+              $older_button.removeClass( 'disabled' );
             }
 
             // If we're not at the beginning of the feed, make sure the "Newer" button is enabled.
             if ( start > 0 ) {
-              $prev_button.removeClass( 'disabled' );
+              $newer_button.removeClass( 'disabled' );
             } else {
-              $prev_button.addClass( 'disabled' );
+              $newer_button.addClass( 'disabled' );
             }
 
           } else {
+            $older_button.addClass( 'disabled' );
             console.log( 'That\'s all folks!' );
           }
         } else {
@@ -102,7 +104,11 @@
     'home': {
       init: function() {
         // JavaScript to be fired on the home page
+      },
+      finalize: function() {
+        // JavaScript to be fired on the home page, after the init JS
 
+        // Assign all feed box buttons to their respective job.
         $( '.feed-box' ).each(function() {
           var $feed_box = $( this );
 
@@ -119,9 +125,6 @@
             Feeds.load( $feed_box, 'refresh' );
           });
         });
-      },
-      finalize: function() {
-        // JavaScript to be fired on the home page, after the init JS
       }
     },
     // About us page, note the change from about-us to about_us.
