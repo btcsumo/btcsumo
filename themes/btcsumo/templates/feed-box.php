@@ -4,10 +4,12 @@ use BTCSumo\Feeds;
 
 // Get meta data needed to show feed list.
 $site_url = get_post_meta( get_the_id(), 'feed-site-url', true );
-$feed_url = get_post_meta( get_the_id(), 'feed-feed-url', true );
+
+// Just define the variable first to avoid error notices.
+$has_more = true;
 
 // Make sure we get something from the feed.
-if ( $feed_items = Feeds\fetch_feed_items( $feed_url ) ) : ?>
+if ( $feed_items = Feeds\fetch_feed_items( get_the_ID(), 0, 5, $has_more ) ) : ?>
   <div class="feed-box col-xs-12 col-md-6 col-lg-4">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -16,12 +18,11 @@ if ( $feed_items = Feeds\fetch_feed_items( $feed_url ) ) : ?>
           <span class="feed-refresh glyphicon glyphicon-refresh" title="<?= __( 'Refresh', 'btcsumo' ); ?>"></span>
         </h3>
       </div>
-      <ul class="feed-list list-group" data-feed-id="<?= the_ID(); ?>" data-feed-count="5" data-feed-start="0">
+      <ul class="feed-list list-group" data-feed-id="<?= the_ID(); ?>" data-feed-start="0" data-feed-count="5">
         <?php
-        // Loop through each feed item and display each item as a hyperlink.
+        // Loop through and render each feed item.
         foreach ( $feed_items as $feed_item ) {
-          set_query_var( 'feed_item', $feed_item );
-          get_template_part( 'templates/feed', 'item' );
+          Feeds\render_feed_item( $feed_item );
         }
         ?>
       </ul>
@@ -30,7 +31,7 @@ if ( $feed_items = Feeds\fetch_feed_items( $feed_url ) ) : ?>
           <a class="btn btn-link load-newer col-xs-6 disabled">
             <?= __( 'Newer', 'btcsumo' ); ?>
           </a>
-          <a class="btn btn-link load-older col-xs-6">
+          <a class="btn btn-link load-older col-xs-6<?= ( ! $has_more ) ? ' disabled' : ''; ?>">
             <?= __( 'Older', 'btcsumo' ); ?>
           </a>
         </div>
