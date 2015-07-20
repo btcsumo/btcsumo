@@ -29,9 +29,9 @@
       }
 
       .feed-item-date {
-        background-color: #eee;
-        color: #000;
-        float: right;
+       background-color: #bfbfbf;
+    color: #000;
+    float: right;
       }
     }
 
@@ -52,7 +52,7 @@
         padding: 5px 10px;
       }
       a:hover {
-        background-color: rgba(0,0,0,0.05);
+        background-color: yellow(0,0,0,0.05);
       }
       a.disabled {
         color: rgba(0,0,0,0.5);
@@ -60,4 +60,7 @@
     }
 
   }
+}
+li.feed-item.list-group-item a {
+    background-color: #f0f0f0;
 }
