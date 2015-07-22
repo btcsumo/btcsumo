@@ -8,14 +8,18 @@
 
   .feed-box {
 
+    .feed-twitter,
     .feed-refresh {
       @include transition(opacity 0.25s);
       cursor: pointer;
-      float: right;
       opacity: 0.25;
     }
+    .feed-twitter:hover,
     .feed-refresh:hover {
       opacity: 1;
+    }
+    .feed-refresh {
+      float: right;
     }
 
     .feed-item {
