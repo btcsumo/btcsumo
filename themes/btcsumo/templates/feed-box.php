@@ -4,6 +4,10 @@ use BTCSumo\Feeds;
 
 // Get meta data needed to show feed list.
 $site_url = get_post_meta( get_the_id(), 'feed-site-url', true );
+$twitter_url = '';
+if ( $twitter_username = get_post_meta( get_the_id(), 'feed-twitter-username', true ) ) {
+  $twitter_url = 'https://twitter.com/' . $twitter_username;
+}
 
 // Just define the variable first to avoid error notices.
 $has_more = true;
@@ -15,6 +19,9 @@ if ( $feed_items = Feeds\fetch_feed_items( get_the_ID(), 0, 5, $has_more ) ) : ?
       <div class="panel-heading">
         <h3 class="panel-title">
           <a href="<?= $site_url; ?>" target="_blank"><?php the_title(); ?></a>
+          <?php if ( ! empty( $twitter_url ) ) : ?>
+          <a href="<?= $twitter_url; ?>" target="_blank" class="feed-twitter glyphicon glyphicon-link" title="<?= __( 'Twitter', 'btcsumo' ); ?>"></a>
+          <?php endif; ?>
           <span class="feed-refresh glyphicon glyphicon-refresh" title="<?= __( 'Refresh', 'btcsumo' ); ?>"></span>
         </h3>
       </div>

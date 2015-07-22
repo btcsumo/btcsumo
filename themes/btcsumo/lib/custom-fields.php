@@ -62,6 +62,13 @@ function feeds_mb_cb( $post ) {
     </label>
   </p>
 
+  <p>
+    <label>
+      <?php _e( 'Twitter username', 'btcsumo' ); ?><br>
+      <input class="widefat" type="text" name="feed-twitter-username" value="<?= esc_attr( get_post_meta( $post->ID, 'feed-twitter-username', true ) ); ?>" size="30">
+    </label>
+  </p>
+
 <?php
 }
 
@@ -96,4 +103,7 @@ function feeds_mb_save( $post_id ) {
 
   $feed_url = ( isset( $_POST['feed-feed-url'] ) ) ? esc_url( $_POST['feed-feed-url'] ) : false;
   update_post_meta( $post_id, 'feed-feed-url', $feed_url );
+
+  $twitter_username = ( isset( $_POST['feed-twitter-username'] ) ) ? trim( $_POST['feed-twitter-username'], '@ ' ) : false;
+  update_post_meta( $post_id, 'feed-twitter-username', $twitter_username );
 }
