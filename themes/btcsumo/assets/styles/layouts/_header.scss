@@ -12,13 +12,13 @@
   }
 
   @media (min-width: $screen-sm-min) {
-    .navbar-header{
+    .navbar-header {
       text-align: center;
       width: 100%;
     }
     .navbar-brand {
-      width: 100%;
       font-size: 3em;
+      width: 100%;
     }
   }
 }

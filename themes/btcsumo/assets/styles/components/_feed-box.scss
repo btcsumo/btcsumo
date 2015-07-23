@@ -21,14 +21,14 @@
       text-align: center;
     }
 
-    .feed-twitter,
-    .feed-refresh {
+    .feed-refresh,
+    .feed-twitter {
       @include transition(opacity 0.25s);
       cursor: pointer;
       opacity: 0.25;
     }
-    .feed-twitter:hover,
-    .feed-refresh:hover {
+    .feed-refresh:hover,
+    .feed-twitter:hover {
       opacity: 1;
     }
     .feed-refresh {
@@ -36,8 +36,8 @@
     }
 
     .feed-item {
-      padding: 0;
       background-color: #f0f0f0;
+      padding: 0;
 
       a {
         cursor: pointer;
@@ -54,20 +54,20 @@
     }
 
     .load-more {
-      padding: 0;
       margin: 0;
+      padding: 0;
 
       .row {
-        padding: 0;
         margin: 0;
+        padding: 0;
       }
 
       a {
-        text-align: center;
         cursor: pointer;
         display: block;
         margin: 0;
         padding: 5px 10px;
+        text-align: center;
       }
       a:hover {
         background-color: rgba(0,0,0,0.1);
