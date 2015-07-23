@@ -1,3 +1,8 @@
+/* This fix is required to prevent premature wrapping of boxes. */
+.feed-boxes::before {
+  display: inherit;
+}
+
 .feed-boxes {
   display: flex;
   display: -ms-flexbox; /*IE10*/
@@ -8,14 +13,22 @@
 
   .feed-box {
 
-    .feed-twitter,
-    .feed-refresh {
+    .panel-heading {
+      background-color: #ebd000;
+      color: #141412;
+      font-family: Consolas;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    .feed-refresh,
+    .feed-twitter {
       @include transition(opacity 0.25s);
       cursor: pointer;
       opacity: 0.25;
     }
-    .feed-twitter:hover,
-    .feed-refresh:hover {
+    .feed-refresh:hover,
+    .feed-twitter:hover {
       opacity: 1;
     }
     .feed-refresh {
@@ -23,6 +36,7 @@
     }
 
     .feed-item {
+      background-color: #f0f0f0;
       padding: 0;
 
       a {
@@ -33,38 +47,34 @@
       }
 
       .feed-item-date {
-       background-color: #bfbfbf;
-    color: #000;
-    float: right;
+        background-color: #bfbfbf;
+        color: #000;
+        float: right;
       }
     }
 
     .load-more {
-      padding: 0;
       margin: 0;
+      padding: 0;
 
       .row {
-        padding: 0;
         margin: 0;
+        padding: 0;
       }
 
       a {
-        text-align: center;
         cursor: pointer;
         display: block;
         margin: 0;
         padding: 5px 10px;
+        text-align: center;
       }
       a:hover {
-        background-color: yellow(0,0,0,0.05);
+        background-color: rgba(0,0,0,0.1);
       }
       a.disabled {
         color: rgba(0,0,0,0.5);
       }
     }
-
   }
-}
-li.feed-item.list-group-item a {
-    background-color: #f0f0f0;
 }
