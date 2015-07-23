@@ -1,3 +1,8 @@
+/* This fix is required to prevent premature wrapping of boxes. */
+.feed-boxes::before {
+  display: inherit;
+}
+
 .feed-boxes {
   display: flex;
   display: -ms-flexbox; /*IE10*/
