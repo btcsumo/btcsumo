@@ -1,6 +1,7 @@
 <?php
   // This file assumes that you have included the nav walker from https://github.com/twittem/wp-bootstrap-navwalker
   // somewhere in your theme.
+  use Roots\Sage\Assets;
 ?>
 
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
@@ -11,7 +12,7 @@
         <span><?= __( 'Menu', 'btcsumo' ); ?></span>
         <span class="glyphicon glyphicon-menu-hamburger"></span>
       </button>
-      <a class="navbar-brand" href="<?= esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
+      <a class="navbar-brand" href="<?= esc_url(home_url('/')); ?>"><img src="<?php echo Roots\Sage\Assets\asset_path( 'images/logo.png' ); ?>"></a>
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">
