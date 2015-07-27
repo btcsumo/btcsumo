@@ -11,11 +11,6 @@ add_theme_support( 'soil-clean-up' );      // Enable clean up from Soil.
 add_theme_support( 'soil-js-to-footer' );  // Move all JS to footer.
 add_theme_support( 'soil-disable-asset-versioning' ); // Disable version queries of assets.
 
-//add_theme_support( 'soil-nav-walker' );    // Enable cleaner nav walker from Soil.
-//add_theme_support( 'soil-relative-urls' ); // Enable relative URLs from Soil.
-//add_theme_support( 'soil-nice-search' );   // Enable nice search from Soil.
-//add_theme_support( 'soil-jquery-cdn' );    // Enable to load jQuery from the Google CDN.
-
 /**
  * Configuration values
  */
