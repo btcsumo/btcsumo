@@ -48,7 +48,7 @@ foreach ( $feed_posts as $feed_post ) {
       $feed_items = [];
     }
 
-    $i = 0;
+    $new_feed_item_count = 0;
 
     // Loop through all the fetched feed items and save the new ones to the current list.
     foreach ( $feed_loaded->get_items() as $feed_item ) {
@@ -59,24 +59,31 @@ foreach ( $feed_posts as $feed_post ) {
       ];
 
       // Is this one new?
-      if ( empty( $feed_items ) || count( $feed_items ) === $i || $feed_items[0]->permalink !== $new_feed_item->permalink ) {
+      if ( empty( $feed_items ) || count( $feed_items ) === $new_feed_item_count || $feed_items[0]->permalink !== $new_feed_item->permalink ) {
         $feed_items[] = $new_feed_item;
-        $i++;
+        $new_feed_item_count++;
       } else {
         // No new entries.
         break;
       }
     }
 
-    // Only keep a limited amount of entries, namely the past 30 days.
-    $feed_items = array_filter( $feed_items, function( $val ) {
-      return ( $val->timestamp > ( time() - BTCSUMO_FEED_KEEP_LIMIT ) );
-    } );
-
-    // Sort by date.
+    // First we sort all entries by date (newest first)...
     usort( $feed_items, function( $a, $b ) {
       return ( ( $a->timestamp >= $b->timestamp ) ? -1 : 1 );
     } );
+
+    // ...then we only keep a limited amount of entries.
+    // Namely: From the past 30 days, at least 30 entries.
+    $splice_at = 0;
+    foreach ( $feed_items as $feed_item ) {
+      if ( $feed_item->timestamp > ( time() - BTCSUMO_FEED_KEEP_LIMIT ) || $splice_at < 30 ) {
+        $splice_at++;
+      } else {
+        break;
+      }
+    }
+    array_splice( $feed_items, $splice_at );
 
     // Update the feed items.
     update_post_meta( $feed_post->ID, 'feed-feed-items', $feed_items );
