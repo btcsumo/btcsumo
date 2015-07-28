@@ -12,14 +12,19 @@ query_posts( [
 ] );
 ?>
 
-<div class="container">
-  <div class="row feed-boxes" data-nonce="<?= wp_create_nonce( 'ajax_fetch_feed_items_nonce' ); ?>">
-
-  <?php while ( have_posts() ) : the_post(); ?>
-    <?php get_template_part( 'templates/feed', 'box' ); ?>
-  <?php endwhile; ?>
-
-  </div>
+<div class="row feed-boxes" data-nonce="<?= wp_create_nonce( 'ajax_fetch_feed_items_nonce' ); ?>">
+  <?php
+  if ( have_posts() ) {
+    while ( have_posts() ) {
+      the_post();
+      get_template_part( 'templates/feed', 'box' );
+    }
+  } else {
+    echo '<div class="alert alert-info">';
+    _e( 'No feeds available right now, they are probably being updated. Check back in a bit ;-)', 'btcsumo' );
+    echo '</div>';
+  }
+  ?>
 </div>
 
 <?php wp_reset_query(); ?>
