@@ -18,11 +18,11 @@ if ( $feed_items = Feeds\fetch_feed_items( get_the_ID(), 0, 5, $has_more ) ) : ?
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <a href="<?= $site_url; ?>" target="_blank"><?php the_title(); ?></a>
           <?php if ( ! empty( $twitter_url ) ) : ?>
-          <a href="<?= $twitter_url; ?>" target="_blank" class="feed-twitter glyphicon glyphicon-link" title="<?= __( 'Twitter', 'btcsumo' ); ?>"></a>
+          <a href="<?= $twitter_url; ?>" target="_blank" class="feed-twitter fa fa-twitter" title="<?= __( 'Twitter', 'btcsumo' ); ?>"></a>
           <?php endif; ?>
-          <span class="feed-refresh glyphicon glyphicon-refresh" title="<?= __( 'Refresh', 'btcsumo' ); ?>"></span>
+          <a href="<?= $site_url; ?>" target="_blank"><?php the_title(); ?></a>
+          <span class="feed-refresh fa fa-refresh" title="<?= __( 'Refresh', 'btcsumo' ); ?>"></span>
         </h3>
       </div>
       <ul class="feed-list list-group" data-feed-id="<?= the_ID(); ?>" data-feed-start="0" data-feed-count="5">
