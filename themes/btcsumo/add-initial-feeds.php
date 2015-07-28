@@ -5,31 +5,31 @@ $feeds_list = [
     'title'    => 'Cryptocoins News',
     'site_url' => 'https://www.cryptocoinsnews.com',
     'feed_url' => 'https://www.cryptocoinsnews.com/category/news/feed',
-    'twitter'  => false
+    'twitter'  => 'CryptoCoinsNews'
   ],
   [
     'title'    => 'CoinDesk',
     'site_url' => 'http://coindesk.com',
     'feed_url' => 'http://feeds.feedburner.com/CoinDesk',
-    'twitter'  => false
+    'twitter'  => 'coindesk'
   ],
   [
     'title'    => 'Follow The Coin',
     'site_url' => 'http://www.followthecoin.com',
     'feed_url' => 'http://www.followthecoin.com/feed/atom',
-    'twitter'  => false
+    'twitter'  => 'FollowTheCoin'
   ],
   [
     'title'    => 'Coin Telegraph',
     'site_url' => 'http://cointelegraph.com',
     'feed_url' => 'http://cointelegraph.com/rss',
-    'twitter'  => false
+    'twitter'  => 'CoinTelegraph'
   ],
   [
     'title'    => 'Bitcoin Magazine',
     'site_url' => 'https://bitcoinmagazine.com',
     'feed_url' => 'http://feeds.feedburner.com/BitcoinMagazine',
-    'twitter'  => false
+    'twitter'  => 'BitcoinMagazine'
   ],
   [
     'title'    => 'Tyra CPA',
@@ -41,43 +41,43 @@ $feeds_list = [
     'title'    => 'Bitcoin Chaser',
     'site_url' => 'http://bitcoinchaser.com',
     'feed_url' => 'http://bitcoinchaser.com/feed',
-    'twitter'  => false
+    'twitter'  => 'BitcoinChaser'
   ],
   [
     'title'    => 'Bitcoinist',
     'site_url' => 'http://bitcoinist.net',
     'feed_url' => 'http://bitcoinist.net/feed',
-    'twitter'  => false
+    'twitter'  => 'bitcoinist'
   ],
   [
     'title'    => 'Bitcoin Warrior',
     'site_url' => 'http://bitcoinwarrior.net',
     'feed_url' => 'http://bitcoinwarrior.net/feed',
-    'twitter'  => false
+    'twitter'  => 'BitCoin_Win'
   ],
   [
     'title'    => 'CEX.IO',
     'site_url' => 'http://blog.cex.io',
     'feed_url' => 'http://blog.cex.io/feed',
-    'twitter'  => false
+    'twitter'  => 'cex_io'
   ],
   [
     'title'    => 'Coins Source',
     'site_url' => 'http://www.coinssource.com',
     'feed_url' => 'http://www.coinssource.com/rss',
-    'twitter'  => false
+    'twitter'  => 'coinssource'
   ],
   [
     'title'    => 'Altcoin Speculation',
     'site_url' => 'http://altcoinspeculation.com',
     'feed_url' => 'http://altcoinspeculation.com/feed',
-    'twitter'  => false
+    'twitter'  => 'altcoinspec'
   ],
   [
     'title'    => 'CoinFinance',
     'site_url' => 'http://www.coinfinance.com',
     'feed_url' => 'http://feeds.feedburner.com/CoinFinance',
-    'twitter'  => false
+    'twitter'  => 'coinfinance_com'
   ],
   [
     'title'    => 'Bitcoin Outpost',
@@ -89,13 +89,13 @@ $feeds_list = [
     'title'    => 'Bitcoin Feeds',
     'site_url' => 'http://bitcoinfeeds.com',
     'feed_url' => 'http://bitcoinfeeds.com/feed',
-    'twitter'  => false
+    'twitter'  => 'BitcoinFeeds'
   ],
   [
     'title'    => 'The Blogchain',
     'site_url' => 'http://theblogchain.com',
     'feed_url' => 'http://theblogchain.com/feed',
-    'twitter'  => false
+    'twitter'  => 'BenIsgur'
   ],
   [
     'title'    => 'Cryptocoin Talk',
@@ -113,7 +113,7 @@ $feeds_list = [
     'title'    => 'Brave New Coin',
     'site_url' => 'http://bravenewcoin.com',
     'feed_url' => 'http://bravenewcoin.com/news/rss',
-    'twitter'  => false
+    'twitter'  => 'bravenewcoin'
   ],
   [
     'title'    => 'Crypto Mining Blog',
@@ -125,19 +125,19 @@ $feeds_list = [
     'title'    => 'Inside Bitcoins',
     'site_url' => 'http://insidebitcoins.com',
     'feed_url' => 'http://insidebitcoins.com/feed',
-    'twitter'  => false
+    'twitter'  => 'InsideBitcoins'
   ],
   [
     'title'    => 'Live Bitcoin News',
     'site_url' => 'http://www.livebitcoinnews.com',
     'feed_url' => 'http://www.livebitcoinnews.com/feed',
-    'twitter'  => false
+    'twitter'  => 'LiveBitcoinNews'
   ],
   [
     'title'    => 'Coin Center',
     'site_url' => 'https://coincenter.org',
     'feed_url' => 'https://coincenter.org/category/blog/feed',
-    'twitter'  => false
+    'twitter'  => 'coincenter'
   ],
   [
     'title'    => 'Best Bitcoin Wallet',
@@ -173,7 +173,7 @@ $feeds_list = [
     'title'    => 'BTC Trading',
     'site_url' => 'https://btctrading.wordpress.com',
     'feed_url' => 'https://btctrading.wordpress.com/feed',
-    'twitter'  => false
+    'twitter'  => 'Bitcoin_Trading'
   ],
   [
     'title'    => 'Bitcoin Blog',
@@ -191,13 +191,13 @@ $feeds_list = [
     'title'    => 'CoinBuzz',
     'site_url' => 'http://www.coinbuzz.com',
     'feed_url' => 'http://www.coinbuzz.com/feed',
-    'twitter'  => false
+    'twitter'  => 'coinbuzz'
   ],
   [
     'title'    => 'Coin Report',
     'site_url' => 'https://coinreport.net',
     'feed_url' => 'https://coinreport.net/feed',
-    'twitter'  => false
+    'twitter'  => 'CoinReportNews'
   ],
   [
     'title'    => 'Bitcoin Scientist',
@@ -209,7 +209,7 @@ $feeds_list = [
     'title'    => 'BitCoinada',
     'site_url' => 'http://bitcoinada.com',
     'feed_url' => 'http://bitcoinada.com/feed',
-    'twitter'  => false
+    'twitter'  => 'bitcoinada'
   ],
   [
     'title'    => 'Bitcoin Weekly',
@@ -227,7 +227,19 @@ $feeds_list = [
     'title'    => 'All Coins News',
     'site_url' => 'http://allcoinsnews.com',
     'feed_url' => 'http://allcoinsnews.com/feed',
-    'twitter'  => false
+    'twitter'  => 'allcoinsnews'
+  ],
+  [
+    'title'    => 'Mining Pool',
+    'site_url' => 'http://www.miningpool.co.uk',
+    'feed_url' => 'http://www.miningpool.co.uk/feed',
+    'twitter'  => 'mining_pool'
+  ],
+  [
+    'title'    => 'CoinFox',
+    'site_url' => 'http://www.coinfox.info',
+    'feed_url' => 'http://www.coinfox.info/rss',
+    'twitter'  => 'coin_fox'
   ]
 ];
 
