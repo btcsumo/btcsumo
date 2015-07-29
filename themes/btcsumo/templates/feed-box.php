@@ -34,6 +34,7 @@ if ( $feed_items = Feeds\fetch_feed_items( get_the_ID(), 0, 5, $has_more ) ) : ?
         ?>
       </ul>
       <div class="load-more panel-footer">
+        <i class="load-spinner fa fa-refresh fa-spin"></i>
         <div class="row">
           <a class="btn btn-link load-newer col-xs-6 disabled">
             <?= __( 'Newer', 'btcsumo' ); ?>

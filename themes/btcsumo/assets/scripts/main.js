@@ -22,9 +22,11 @@
       var count = parseInt( $feed_list.attr( 'data-feed-count') );
       var start = parseInt( $feed_list.attr( 'data-feed-start') );
 
-      // Get the "Older" and "Newer" buttons.
-      var $newer_button = $( '.load-newer', $feed_box );
-      var $older_button = $( '.load-older', $feed_box );
+      // Get the "Older", "Newer" and refresh buttons.
+      var $newer_button   = $( '.load-newer',   $feed_box );
+      var $older_button   = $( '.load-older',   $feed_box );
+      var $refresh_button = $( '.feed-refresh', $feed_box );
+      var $load_spinner   = $( '.load-spinner', $feed_box );
 
       // Adjust parameters for fetching items, depending on what we're doing.
       switch( what ) {
@@ -44,6 +46,16 @@
           break;
       }
 
+      // Remember the button states in case the request fails.
+      var newer_button_class = $newer_button.attr( 'class' );
+      var older_button_class = $older_button.attr( 'class' );
+
+      // Show spinner and disable all buttons while loading new content.
+      $load_spinner.fadeIn();
+      $newer_button.addClass( 'disabled' );
+      $older_button.addClass( 'disabled' );
+      $refresh_button.addClass( 'fa-spin disabled' );
+
       // Make the AJAX request.
       $.post( ajaxurl, {
         'action' : 'ajax_fetch_feed_items',
@@ -51,8 +63,8 @@
         'id'     : id,
         'count'  : count,
         'start'  : start
-      },
-      function( response ) {
+      })
+      .done( function( response ) {
         // Do we have a successful request?
         if ( response.success ) {
           var feed_items = response.data.items;
@@ -63,27 +75,33 @@
               $feed_list.append( item );
             });
 
-            // If there are no more items in the feed, disable the "Older" button.
-            if ( ! response.data.has_more ) {
-              $older_button.addClass( 'disabled' );
-            } else {
+            // If there are more items in the feed, enable the "Older" button.
+            if ( response.data.has_more ) {
               $older_button.removeClass( 'disabled' );
             }
 
             // If we're not at the beginning of the feed, make sure the "Newer" button is enabled.
             if ( start > 0 ) {
               $newer_button.removeClass( 'disabled' );
-            } else {
-              $newer_button.addClass( 'disabled' );
             }
-
           } else {
-            $older_button.addClass( 'disabled' );
             console.log( 'That\'s all folks!' );
           }
         } else {
+          $newer_button.attr( 'class', newer_button_class );
+          $older_button.attr( 'class', older_button_class );
           console.warn( 'AJAX request failed: ' + response.data );
         }
+      })
+      .fail( function(response) {
+        // AJAX request failed.
+        $newer_button.attr( 'class', newer_button_class );
+        $older_button.attr( 'class', older_button_class );
+        console.warn( 'AJAX request failed: Invalid AJAX URL.' );
+      })
+      .always( function() {
+        $refresh_button.removeClass( 'fa-spin disabled' );
+        $load_spinner.fadeOut();
       });
     } // load()
   };
