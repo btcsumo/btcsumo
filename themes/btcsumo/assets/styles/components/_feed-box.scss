@@ -59,10 +59,19 @@
     .load-more {
       margin: 0;
       padding: 0;
+      position: relative;
 
       .row {
         margin: 0;
         padding: 0;
+      }
+
+      .load-spinner {
+        bottom: 25%;
+        display: block;
+        display: none;
+        left: 48%;
+        position: absolute;
       }
 
       a {
