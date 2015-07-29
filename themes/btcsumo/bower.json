@@ -15,7 +15,10 @@
       "main": "./modernizr.js"
     },
     "bootstrap-sass-official": {
-      "main": "./assets/stylesheets/_bootstrap.scss"
+      "main": [
+        "./assets/stylesheets/_bootstrap.scss",
+        "./assets/javascripts/bootstrap/collapse.js"
+      ]
     }
   }
 }
