@@ -10,7 +10,7 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only"><?= __('Toggle navigation', 'sage'); ?></span>
         <span><?= __( 'Menu', 'btcsumo' ); ?></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
+        <span class="fa fa-bars"></span>
       </button>
       <a class="navbar-brand" href="<?= esc_url(home_url('/')); ?>"><img src="<?php echo Roots\Sage\Assets\asset_path( 'images/logo.png' ); ?>"></a>
     </div>
