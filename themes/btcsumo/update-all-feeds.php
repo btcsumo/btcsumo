@@ -44,11 +44,11 @@ foreach ( $feed_posts as $feed_post ) {
 
     // Get the current list of feed items.
     $feed_items = get_post_meta( $feed_post->ID, 'feed-feed-items', true );
+    $first_update = false;
     if ( empty( $feed_items ) ) {
       $feed_items = [];
+      $first_update = true;
     }
-
-    $new_feed_item_count = 0;
 
     // Loop through all the fetched feed items and save the new ones to the current list.
     foreach ( $feed_loaded->get_items() as $feed_item ) {
@@ -59,9 +59,8 @@ foreach ( $feed_posts as $feed_post ) {
       ];
 
       // Is this one new?
-      if ( empty( $feed_items ) || count( $feed_items ) === $new_feed_item_count || $feed_items[0]->permalink !== $new_feed_item->permalink ) {
+      if ( $first_update || $feed_items[0]->permalink !== $new_feed_item->permalink ) {
         $feed_items[] = $new_feed_item;
-        $new_feed_item_count++;
       } else {
         // No new entries.
         break;
@@ -92,8 +91,8 @@ foreach ( $feed_posts as $feed_post ) {
     delete_post_meta( $feed_post->ID, 'feed-error', $feed_error );
 
   } else {
-    // Feed is faulty.
-    update_post_meta( $feed_post->ID, 'feed-error', true );
+    // Feed is faulty, remember the error message.
+    update_post_meta( $feed_post->ID, 'feed-error', $feed_loaded->get_error_message() );
   }
 
   // Update the time of the current feed update.
