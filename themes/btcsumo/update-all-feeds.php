@@ -52,42 +52,45 @@ foreach ( $feed_posts as $feed_post ) {
       $first_update = true;
     }
 
-    // Loop through all the fetched feed items and save the new ones to the current list.
+    // Loop through all the fetched feed items and save them to an array.
+    $new_feed_items = [];
     foreach ( $feed_loaded->get_items() as $feed_item ) {
-      $new_feed_item = (object) [
+      $new_feed_items[] = (object) [
         'title'     => esc_html( $feed_item->get_title() ),
         'permalink' => esc_url( $feed_item->get_permalink() ),
         'timestamp' => $feed_item->get_date( 'U' )
       ];
-
-      // Is this one new?
-      if ( $first_update || $feed_items[0]->permalink !== $new_feed_item->permalink ) {
-        $feed_items[] = $new_feed_item;
-      } else {
-        // No new entries.
-        break;
-      }
     }
 
-    // First we sort all entries by date (newest first)...
-    usort( $feed_items, function( $a, $b ) {
+    // First we sort all new entries by date (newest first)...
+    // (they should be in this order already, this is just a failsafe)
+    usort( $new_feed_items, function( $a, $b ) {
       return ( ( $a->timestamp >= $b->timestamp ) ? -1 : 1 );
     } );
 
-    // ...then we only keep a limited amount of entries.
+    // ...then we add the older saved ones...
+    // Timestamp from the oldest of the newly loaded items.
+    $oldest_new_timestamp = end( $new_feed_items )->timestamp;
+    foreach ( $feed_items as $feed_item ) {
+      if ( $feed_item->timestamp < $oldest_new_timestamp ) {
+        $new_feed_items[] = $feed_item;
+      }
+    }
+
+    // ...and finally we only keep a limited amount of entries.
     // Namely: From the past 30 days, at least 30 entries.
     $splice_at = 0;
-    foreach ( $feed_items as $feed_item ) {
+    foreach ( $new_feed_items as $feed_item ) {
       if ( $feed_item->timestamp > ( time() - BTCSUMO_FEED_KEEP_LIMIT ) || $splice_at < 30 ) {
         $splice_at++;
       } else {
         break;
       }
     }
-    array_splice( $feed_items, $splice_at );
+    array_splice( $new_feed_items, $splice_at );
 
     // Update the feed items.
-    update_post_meta( $feed_post->ID, 'feed-feed-items', $feed_items );
+    update_post_meta( $feed_post->ID, 'feed-feed-items', $new_feed_items );
 
     // Remove any error.
     delete_post_meta( $feed_post->ID, 'feed-error', $feed_error );
