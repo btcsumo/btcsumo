@@ -16,26 +16,26 @@ class ConditionalTagCheck {
 
   public $result = true;
 
-  public function __construct($conditionals = []) {
+  public function __construct( $conditionals = [] ) {
     $this->conditionals = $conditionals;
 
-    $conditionals = array_map([$this, 'checkConditionalTag'], $this->conditionals);
+    $conditionals = array_map( [ $this, 'checkConditionalTag' ], $this->conditionals );
 
-    if (in_array(true, $conditionals)) {
+    if ( in_array( true, $conditionals ) ) {
       $this->result = false;
     }
   }
 
-  private function checkConditionalTag($conditional) {
-    if (is_array($conditional)) {
-      list($tag, $args) = $conditional;
+  private function checkConditionalTag( $conditional ) {
+    if ( is_array( $conditional ) ) {
+      list( $tag, $args ) = $conditional;
     } else {
       $tag = $conditional;
       $args = false;
     }
 
-    if (function_exists($tag)) {
-      return $args ? $tag($args) : $tag();
+    if ( function_exists( $tag ) ) {
+      return ( $args ) ? $tag( $args ) : $tag();
     } else {
       return false;
     }
