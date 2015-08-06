@@ -106,12 +106,32 @@
     } // load()
   };
 
+  /**
+   * Bitcoin price ticker related.
+   * @type {Object}
+   * @todo Add AJAX call to update prices periodically.
+   */
+  var BTCTicker = {
+    load: function() {
+      $( '#bitcoin-ticker-list li' ).click(function( e ) {
+        e.preventDefault();
+        var $this = $( this );
+        var info = $.parseJSON( $this.attr( 'data-info' ) );
+        $this.siblings().removeClass( 'active' );
+        $this.addClass( 'active' );
+
+        $( '#bitcoin-ticker-price' ).html( '<span>' + info.cur + '</span>' + info.price );
+      });
+    } // load()
+  };
+
   // Use this variable to set up the common and page specific functions. If you
   // rename this variable, you will also need to rename the namespace below.
   var Sage = {
     // All pages
     'common': {
       init: function() {
+        BTCTicker.load();
         // JavaScript to be fired on all pages
       },
       finalize: function() {
