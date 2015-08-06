@@ -1,4 +1,4 @@
-<?php use Roots\Sage\Assets; ?>
+<?php use BTCSumo\Assets; ?>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">

@@ -1,29 +1,24 @@
 <?php
 
-namespace Roots\Sage\Config;
+namespace BTCSumo\Config;
 
-use Roots\Sage\ConditionalTagCheck;
+use BTCSumo\ConditionalTagCheck;
 
 /**
  * Enable theme features.
  */
-add_theme_support( 'soil-clean-up' );      // Enable clean up from Soil.
-add_theme_support( 'soil-js-to-footer' );  // Move all JS to footer.
+add_theme_support( 'soil-clean-up' );     // Enable clean up from Soil.
+add_theme_support( 'soil-js-to-footer' ); // Move all JS to footer.
 add_theme_support( 'soil-disable-asset-versioning' ); // Disable version queries of assets.
 
 /**
  * Configuration values
  */
-if (!defined('WP_ENV')) {
-  // Fallback if WP_ENV isn't defined in your WordPress config
-  // Used in lib/assets.php to check for 'development' or 'production'
-  define('WP_ENV', 'production');
-}
-
-if (!defined('DIST_DIR')) {
+// Fallback if WP_ENV isn't defined in your WordPress config
+// Used in lib/assets.php to check for 'development' or 'production'
+defined( 'WP_ENV' ) || define( 'WP_ENV', 'production' );
   // Path to the build directory for front-end assets
-  define('DIST_DIR', '/dist/');
-}
+defined( 'DIST_DIR' ) || define( 'DIST_DIR', '/dist/' );
 
 /**
  * Define which pages shouldn't have the sidebar
@@ -31,7 +26,7 @@ if (!defined('DIST_DIR')) {
 function display_sidebar() {
   static $display;
 
-  if (!isset($display)) {
+  if ( ! isset( $display ) ) {
     $conditionalCheck = new ConditionalTagCheck(
       /**
        * Any of these conditional tags that return true won't show the sidebar.
@@ -52,11 +47,11 @@ function display_sidebar() {
       [
         'is_404',
         'is_front_page',
-        ['is_page', 'about']
+        [ 'is_page', 'about' ]
       ]
     );
 
-    $display = apply_filters('sage/display_sidebar', $conditionalCheck->result);
+    $display = apply_filters( 'sage/display_sidebar', $conditionalCheck->result );
   }
 
   return $display;

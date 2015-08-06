@@ -1,10 +1,10 @@
-<?php use Roots\Sage\Assets; ?>
+<?php use BTCSumo\Assets; ?>
 <footer class="footer content-info" role="contentinfo">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
         <ul class="powered-by">
-          <li><?= __( 'Powered by:', 'btcsumo' ); ?>
+          <li><?php _e( 'Powered by:', 'btcsumo' ); ?>
           <li><a href="http://www.wordpress.org/" target="_blank" rel="nofollow">
             <img src="<?= Assets\asset_path( 'images/logos/wordpress.png' ); ?>" alt="WordPress">
           </a>
