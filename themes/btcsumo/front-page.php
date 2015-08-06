@@ -6,9 +6,9 @@
 // Get all the active feeds.
 query_posts( [
   'posts_per_page' => -1,
-  'post_type'  => 'feeds',
-  'meta_key'   => 'feed-active',
-  'meta_value' => true
+  'post_type'      => 'feeds',
+  'meta_key'       => 'feed-active',
+  'meta_value'     => true
 ] );
 ?>
 
