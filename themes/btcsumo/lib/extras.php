@@ -7,30 +7,30 @@ use Roots\Sage\Config;
 /**
  * Add <body> classes
  */
-function body_class($classes) {
+function body_class( $classes ) {
   // Add page slug if it doesn't exist
-  if (is_single() || is_page() && !is_front_page()) {
-    if (!in_array(basename(get_permalink()), $classes)) {
-      $classes[] = basename(get_permalink());
+  if ( is_single() || is_page() && ! is_front_page() ) {
+    if ( ! in_array( basename( get_permalink() ), $classes ) ) {
+      $classes[] = basename( get_permalink() );
     }
   }
 
   // Add class if sidebar is active
-  if (Config\display_sidebar()) {
+  if ( Config\display_sidebar() ) {
     $classes[] = 'sidebar-primary';
   }
 
   return $classes;
 }
-add_filter('body_class', __NAMESPACE__ . '\\body_class');
+add_filter( 'body_class', __NAMESPACE__ . '\\body_class' );
 
 /**
  * Clean up the_excerpt()
  */
 function excerpt_more() {
-  return ' &hellip; <a href="' . get_permalink() . '">' . __('Continued', 'sage') . '</a>';
+  return ' &hellip; <a href="' . get_permalink() . '">' . __( 'Continued', 'btcsumo' ) . '</a>';
 }
-add_filter('excerpt_more', __NAMESPACE__ . '\\excerpt_more');
+add_filter( 'excerpt_more', __NAMESPACE__ . '\\excerpt_more' );
 
 /**
  * Add ajaxurl variable to use AJAX on front-end.
@@ -42,7 +42,7 @@ function ajaxurl() {
   </script>
   <?php
 }
-add_action('wp_head', __NAMESPACE__ . '\\ajaxurl');
+add_action( 'wp_head', __NAMESPACE__ . '\\ajaxurl' );
 
 
 /**
