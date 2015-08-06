@@ -1,6 +1,6 @@
 <?php
 
-namespace Roots\Sage\Titles;
+namespace BTCSumo\Titles;
 
 /**
  * Page titles

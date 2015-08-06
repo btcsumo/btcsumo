@@ -1,6 +1,6 @@
 <?php
 
-namespace Roots\Sage\Assets;
+namespace BTCSumo\Assets;
 
 /**
  * Scripts and stylesheets

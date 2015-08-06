@@ -1,5 +1,5 @@
 <?php
-  use Roots\Sage\Assets;
+  use BTCSumo\Assets;
   use BTCSumo\BitcoinTicker;
 ?>
 

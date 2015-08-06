@@ -1,8 +1,8 @@
 <?php
 
-namespace Roots\Sage\Config;
+namespace BTCSumo\Config;
 
-use Roots\Sage\ConditionalTagCheck;
+use BTCSumo\ConditionalTagCheck;
 
 /**
  * Enable theme features.

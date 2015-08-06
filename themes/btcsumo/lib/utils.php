@@ -1,6 +1,6 @@
 <?php
 
-namespace Roots\Sage\Utils;
+namespace BTCSumo\Utils;
 
 /**
  * Tell WordPress to use searchform.php from the templates/ directory

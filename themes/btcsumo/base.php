@@ -1,6 +1,6 @@
 <?php
-use Roots\Sage\Config;
-use Roots\Sage\Wrapper;
+use BTCSumo\Config;
+use BTCSumo\Wrapper;
 ?>
 
 <!doctype html>

@@ -1,4 +1,4 @@
-<?php use Roots\Sage\Assets; ?>
+<?php use BTCSumo\Assets; ?>
 <footer class="footer content-info" role="contentinfo">
   <div class="container">
     <div class="row">

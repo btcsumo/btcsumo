@@ -10,7 +10,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-use Roots\Sage\Utils;
+use BTCSumo\Utils;
 
 class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
 

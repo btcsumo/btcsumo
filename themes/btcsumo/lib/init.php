@@ -1,8 +1,8 @@
 <?php
 
-namespace Roots\Sage\Init;
+namespace BTCSumo\Init;
 
-use Roots\Sage\Assets;
+use BTCSumo\Assets;
 
 /**
  * Theme setup

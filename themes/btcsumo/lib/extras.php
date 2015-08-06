@@ -1,8 +1,8 @@
 <?php
 
-namespace Roots\Sage\Extras;
+namespace BTCSumo\Extras;
 
-use Roots\Sage\Config;
+use BTCSumo\Config;
 
 /**
  * Add <body> classes
