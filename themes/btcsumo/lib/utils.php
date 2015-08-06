@@ -21,3 +21,16 @@ add_filter('get_search_form', __NAMESPACE__ . '\\get_search_form');
 function empty_or_value( $value, $empty = '' ) {
   return ( empty( $value ) ) ? $empty : $value;
 }
+
+/**
+ * Make an attribute string out of the passed values.
+ * @param  string $attribute The attribute to make.
+ * @param  string $value     The value to assign.
+ * @return string            The complete attribute string.
+ */
+function attrify( $attribute, $value ) {
+  if ( ! $value ) {
+    return '';
+  }
+  return sprintf( ' %s="%s"', $attribute, $value );
+}

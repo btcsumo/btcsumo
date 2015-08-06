@@ -69,7 +69,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
    */
   private function _get_item_id_attribute( $item, $args ) {
     $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
-    return ( $id ) ? ' id="' . esc_attr( $id ) . '"' : '';
+    return Utils\attrify( 'id', esc_attr( $id ) );
   }
 
   /**
@@ -85,7 +85,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
     $classes[] = ( in_array( 'current-menu-item', $classes ) ) ? 'active' : '';
 
     $classes = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
-    return ( $classes ) ? ' class="' . esc_attr( $classes ) . '"' : '';
+    return Utils\attrify( 'class', esc_attr( $classes ) );
   }
 
   /**
@@ -207,8 +207,8 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
 
       $output = sprintf(
         '<ul%s%s><li><a href="%s">%s</a></li></ul>',
-        ( $menu_id )    ? ' id="'    . $menu_id    . '"' : '',
-        ( $menu_class ) ? ' class="' . $menu_class . '"' : '',
+        Utils\attrify( 'id', $menu_id ),
+        Utils\attrify( 'class', $menu_class ),
         esc_url( admin_url( 'nav-menus.php' ) ),
         __( 'Add a menu' )
       );
@@ -217,8 +217,8 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
         $output = sprintf(
           '<%1$s%2$s%3$s>%4$s</%1$s>',
           $container,
-          ( $container_id )    ? ' id="'    . $container_id    . '"' : '',
-          ( $container_class ) ? ' class="' . $container_class . '"' : '',
+          Utils\attrify( 'id', $container_id ),
+          Utils\attrify( 'class', $container_class ),
           $output
         );
       }
