@@ -55,7 +55,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
     foreach ( $atts as $attr => $value ) {
       if ( ! empty( $value ) ) {
         $value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-        $attributes .= sprintf( ' %s="%s"', $attr, $value );
+        $attributes .= Utils\attrify( $attr, $value );
       }
     }
     return $attributes;
