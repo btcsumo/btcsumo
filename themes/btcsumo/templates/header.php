@@ -11,7 +11,7 @@
         <span><?php _e( 'Menu', 'btcsumo' ); ?></span>
         <span class="fa fa-bars"></span>
       </button>
-      <a class="navbar-brand" href="<?= home_url( '/' ); ?>"><img src="<?= Assets\asset_path( 'images/logo.png' ); ?>"></a>
+      <a class="navbar-brand" href="<?= esc_url( home_url( '/' ) ); ?>"><img src="<?= Assets\asset_path( 'images/logo.png' ); ?>"></a>
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">
