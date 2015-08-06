@@ -27,7 +27,7 @@
     if ( $tickers = BitcoinTicker\get_bitcoin_tickers() ) {
       $ul = '<ul id="bitcoin-ticker-list" class="dropdown-menu dropdown-menu-right">';
       $active_ticker = 'bitstamp';
-      foreach( $tickers as $ticker ) {
+      foreach ( $tickers as $ticker ) {
         if ( $active_ticker === $ticker->id ) {
           ?>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
