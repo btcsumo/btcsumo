@@ -33,7 +33,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
    * @param  array  $args
    * @return string         Attributes for the menu item.
    */
-  private function _get_item_attributes( $item, $depth, $args ) {
+  private function _get_item_link_attributes( $item, $depth, $args ) {
     $atts = [];
     $atts['title']  = Utils\empty_or_value( $item->title );
     $atts['target'] = Utils\empty_or_value( $item->target );
@@ -62,12 +62,23 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
   }
 
   /**
+   * Get the ID attribute for the menu item.
+   * @param  object $item Menu item data object.
+   * @param  array  $args
+   * @return string       ID attribute for menu item.
+   */
+  private function _get_item_id_attribute( $item, $args ) {
+    $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
+    return ( $id ) ? ' id="' . esc_attr( $id ) . '"' : '';
+  }
+
+  /**
    * Get the class attribute with all the item's class names.
    * @param  object $item Menu item data object.
    * @param  array  $args
    * @return string       Class attribute for menu item.
    */
-  private function _get_item_class_names( $item, $args ) {
+  private function _get_item_class_attribute( $item, $args ) {
     $classes   = (array) Utils\empty_or_value( $item->classes, [] );
     $classes[] = 'menu-item-' . $item->ID;
     $classes[] = ( $args->has_children ) ? 'dropdown' : '';
@@ -114,14 +125,13 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
 
     $item_type = $this->_get_menu_item_type( $item, $depth );
     if ( 'regular' === $item_type ) {
-      // Set up the id attribute.
-      $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
-      $id = ( $id ) ? ' id="' . esc_attr( $id ) . '"' : '';
+      // Get the id attribute.
+      $id = $this->_get_item_id_attribute( $item, $args );
 
-      // Get the class names attribute.
-      $class_names = $this->_get_item_class_names( $item, $args );
+      // Get the class attribute.
+      $class = $this->_get_item_class_attribute( $item, $args );
 
-      $item_output = '<a' . $this->_get_item_attributes( $item, $depth, $args ) . '>';
+      $item_output = '<a' . $this->_get_item_link_attributes( $item, $depth, $args ) . '>';
 
       // Since the the menu item is NOT a Divider or Header, use the attr_title property for an icon.
       if ( ! empty( $item->attr_title ) ) {
@@ -135,7 +145,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
       // Put the item together.
       $item_output = $args->before . $item_output . $args->after;
 
-      $output .= '<li' . $id . $class_names . '>' . apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+      $output .= '<li' . $id . $class . '>' . apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
     } else {
       $output .= '<li role="presentation" class="' . $item_type . '">';
       if ( 'disabled' === $item_type ) {
