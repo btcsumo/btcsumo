@@ -18,9 +18,9 @@
 
     <nav class="collapse navbar-collapse" role="navigation">
       <?php
-      if (has_nav_menu('primary_navigation')) :
-        wp_nav_menu(['theme_location' => 'primary_navigation', 'walker' => new wp_bootstrap_navwalker(), 'menu_class' => 'nav navbar-nav']);
-      endif;
+      if ( has_nav_menu( 'primary_navigation' ) ) {
+        wp_nav_menu( ['theme_location' => 'primary_navigation', 'walker' => new WP_Bootstrap_Nav_Walker(), 'menu_class' => 'nav navbar-nav'] );
+      }
       ?>
     </nav>
 
