@@ -21,6 +21,7 @@ $sage_includes = [
   'lib/wp-bs-navwalker.php',       // WordPress bootstrap nav walker
   'lib/custom-post-types.php',     // Custom Post Types registration
   'lib/custom-fields.php',         // Custom Fields for all post types
+  'lib/bitcoin-ticker.php',        // Bitcoin price ticker
   'lib/feeds.php'                  // Get the requested feed items
 ];
 

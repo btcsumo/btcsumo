@@ -29,4 +29,22 @@
       position: absolute;
     }
   }
+
+  #bitcoin-ticker {
+    float: right;
+
+    #bitcoin-ticker-list li {
+      cursor: pointer;
+    }
+
+    #bitcoin-ticker-price {
+      font-size: 2em;
+      font-weight: bold;
+
+      span {
+        font-size: .6em;
+        margin-right: 4px;
+      }
+    }
+  }
 }

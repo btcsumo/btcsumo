@@ -43,3 +43,17 @@ function ajaxurl() {
   <?php
 }
 add_action('wp_head', __NAMESPACE__ . '\\ajaxurl');
+
+
+/**
+ * Add extra WP Cron schedules.
+ * @param array $schedules WP Cron schedules.
+ */
+function add_wpcron_schedules( $schedules ) {
+  $schedules['5min'] = [
+    'interval' => 5 * MINUTE_IN_SECONDS,
+    'display'  => __( 'Every 5 Minutes', 'btcsumo' )
+  ];
+  return $schedules;
+}
+add_filter( 'cron_schedules', __NAMESPACE__ . '\\add_wpcron_schedules' );

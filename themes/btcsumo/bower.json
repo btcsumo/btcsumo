@@ -17,7 +17,8 @@
     "bootstrap-sass-official": {
       "main": [
         "./assets/stylesheets/_bootstrap.scss",
-        "./assets/javascripts/bootstrap/collapse.js"
+        "./assets/javascripts/bootstrap/collapse.js",
+        "./assets/javascripts/bootstrap/dropdown.js"
       ]
     }
   }
