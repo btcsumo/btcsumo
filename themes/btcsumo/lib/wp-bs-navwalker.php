@@ -10,6 +10,8 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
+use Roots\Sage\Utils;
+
 class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
 
   /**
@@ -33,9 +35,9 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
    */
   private function _get_item_attributes( $item, $depth, $args ) {
     $atts = [];
-    $atts['title']  = ( empty( $item->title ) )  ? '' : $item->title;
-    $atts['target'] = ( empty( $item->target ) ) ? '' : $item->target;
-    $atts['rel']    = ( empty( $item->xfn ) )    ? '' : $item->xfn;
+    $atts['title']  = Utils\empty_or_value( $item->title );
+    $atts['target'] = Utils\empty_or_value( $item->target );
+    $atts['rel']    = Utils\empty_or_value( $item->xfn );
 
     // If item has_children add atts to a.
     if ( $args->has_children && 0 === $depth ) {
@@ -44,7 +46,7 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
       $atts['class']         = 'dropdown-toggle';
       $atts['aria-haspopup'] = 'true';
     } else {
-      $atts['href'] = ( empty( $item->url ) ) ? '' : $item->url;
+      $atts['href'] = Utils\empty_or_value( $item->url );
     }
 
     $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
@@ -66,13 +68,36 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
    * @return string       Class attribute for menu item.
    */
   private function _get_item_class_names( $item, $args ) {
-    $classes   = ( empty( $item->classes ) ) ? [] : (array) $item->classes;
+    $classes   = (array) Utils\empty_or_value( $item->classes, [] );
     $classes[] = 'menu-item-' . $item->ID;
     $classes[] = ( $args->has_children ) ? 'dropdown' : '';
     $classes[] = ( in_array( 'current-menu-item', $classes ) ) ? 'active' : '';
 
     $classes = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
     return ( $classes ) ? ' class="' . esc_attr( $classes ) . '"' : '';
+  }
+
+  /**
+   * Determine whether the item is a divider, dropdown header, disabled or regular menu item.
+   * @param  object $item   Menu item data object.
+   * @param  int    $depth  Depth of menu item.
+   * @return string         The current menu item type.
+   */
+  private function _get_menu_item_type( $item, $depth ) {
+    $item_type = strtolower( $item->attr_title );
+
+    switch ( $item_type ) {
+      case 'disabled':
+        break;
+      case 'divider':
+      case 'dropdown-header':
+        if ( 1 === $depth ) {
+          break;
+        }
+      default:
+        $item_type = 'regular';
+    }
+    return $item_type;
   }
 
   /**
@@ -86,14 +111,9 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
    * @param int    $id     Menu item ID.
    */
   public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
-    // Determine whether the item is a Divider, Header, Disabled or regular menu item.
-    if ( 1 === $depth && 0 === strcasecmp( $item->attr_title, 'dropdown-header' ) ) {
-      $output .= '<li role="presentation" class="dropdown-header">' . esc_attr( $item->title );
-    } elseif ( 1 === $depth && ( 0 == strcasecmp( $item->attr_title, 'divider' ) || 0 == strcasecmp( $item->title, 'divider') ) ) {
-      $output .= '<li role="presentation" class="divider">';
-    } elseif ( 0 === strcasecmp( $item->attr_title, 'disabled' ) ) {
-      $output .= '<li role="presentation" class="disabled"><a href="#">' . esc_attr( $item->title ) . '</a>';
-    } else {
+
+    $item_type = $this->_get_menu_item_type( $item, $depth );
+    if ( 'regular' === $item_type ) {
       // Set up the id attribute.
       $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
       $id = ( $id ) ? ' id="' . esc_attr( $id ) . '"' : '';
@@ -116,6 +136,13 @@ class WP_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
       $item_output = $args->before . $item_output . $args->after;
 
       $output .= '<li' . $id . $class_names . '>' . apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+    } else {
+      $output .= '<li role="presentation" class="' . $item_type . '">';
+      if ( 'disabled' === $item_type ) {
+        $output .= '<a href="#">' . esc_attr( $item->title ) . '</a>';
+      } elseif ( 'dropdown-header' === $item_type ) {
+        $output .= esc_attr( $item->title );
+      }
     }
   }
 
