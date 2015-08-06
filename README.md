@@ -93,4 +93,4 @@ Now you should see some content when you refresh the home page.
 ## Info
 
 Current Sage commit, to know what to compare to when updating Sage:
-https://github.com/roots/sage/tree/71c2e78b0e42c1a86adba8d4a30e1b6d9df17dff
+https://github.com/roots/sage/tree/12fe0473683553f2adf7652076b198ce122c5cc1
