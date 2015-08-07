@@ -59,9 +59,9 @@ function ajax_fetch_feed_items() {
   // There are no feed items, even though the call was successful.
   if ( empty( $feed_items ) ) {
     wp_send_json_success( [
-      'has_more' => false,
+      'hasMore' => false,
       'message' => __( 'No Feed Items.', 'btcsumo' ),
-      'items' => []
+      'items'   => []
     ] );
   }
 
@@ -73,9 +73,9 @@ function ajax_fetch_feed_items() {
 
   // Pass back the fetched feed items.
   wp_send_json_success( [
-    'has_more' => $has_more,
-    'message'  => sprintf( _n( '%s Item loaded.', '%s Items loaded.', count( $feed_items ), 'btcsumo' ), count( $feed_items ) ),
-    'items'    => $feed_items_html
+    'hasMore' => $has_more,
+    'message' => sprintf( _n( '%s Item loaded.', '%s Items loaded.', count( $feed_items ), 'btcsumo' ), count( $feed_items ) ),
+    'items'   => $feed_items_html
   ] );
 }
 // The private one (top) is necessary to make it work when we're logged in.
