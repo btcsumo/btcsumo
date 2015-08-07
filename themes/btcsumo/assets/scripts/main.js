@@ -14,26 +14,26 @@
 
   // All Feed related methods.
   var Feeds = {
-    load: function( $feed_box, what ) {
-      var $feed_list = $( '.feed-list', $feed_box );
+    load: function($feedBox, what) {
+      var $feedList = $('.feed-list', $feedBox);
 
-      var nonce = $( '.feed-boxes' ).attr( 'data-nonce' );
-      var id    = parseInt( $feed_list.attr( 'data-feed-id') );
-      var count = parseInt( $feed_list.attr( 'data-feed-count') );
-      var start = parseInt( $feed_list.attr( 'data-feed-start') );
+      var nonce = $('.feed-boxes').attr('data-nonce');
+      var id    = parseInt($feedList.attr('data-feed-id'));
+      var count = parseInt($feedList.attr('data-feed-count'));
+      var start = parseInt($feedList.attr('data-feed-start'));
 
       // Get the "Older", "Newer" and refresh buttons.
-      var $newer_button   = $( '.load-newer',   $feed_box );
-      var $older_button   = $( '.load-older',   $feed_box );
-      var $refresh_button = $( '.feed-refresh', $feed_box );
-      var $load_spinner   = $( '.load-spinner', $feed_box );
+      var $newerButton   = $('.load-newer',   $feedBox);
+      var $olderButton   = $('.load-older',   $feedBox);
+      var $refreshButton = $('.feed-refresh', $feedBox);
+      var $loadSpinner   = $('.load-spinner', $feedBox);
 
       // Adjust parameters for fetching items, depending on what we're doing.
-      switch( what ) {
+      switch (what) {
         case 'newer':
-          if ( start <= 0 ) {
+          if (start <= 0) {
             // We're already at the beginning. Disable the button as this event shouldn't even occur.
-            $newer_button.addClass( 'disabled' );
+            $newerButton.addClass('disabled');
             return;
           }
           start -= count;
@@ -47,61 +47,61 @@
       }
 
       // Remember the button states in case the request fails.
-      var newer_button_class = $newer_button.attr( 'class' );
-      var older_button_class = $older_button.attr( 'class' );
+      var newerButtonClass = $newerButton.attr('class');
+      var olderButtonClass = $olderButton.attr('class');
 
       // Show spinner and disable all buttons while loading new content.
-      $load_spinner.fadeIn();
-      $newer_button.addClass( 'disabled' );
-      $older_button.addClass( 'disabled' );
-      $refresh_button.addClass( 'fa-spin disabled' );
+      $loadSpinner.fadeIn();
+      $newerButton.addClass('disabled');
+      $olderButton.addClass('disabled');
+      $refreshButton.addClass('fa-spin disabled');
 
       // Make the AJAX request.
-      $.post( ajaxurl, {
+      $.post(ajaxurl, {
         'action' : 'ajax_fetch_feed_items',
         'nonce'  : nonce,
         'id'     : id,
         'count'  : count,
         'start'  : start
       })
-      .done( function( response ) {
+      .done(function(response) {
         // Do we have a successful request?
-        if ( response.success ) {
-          var feed_items = response.data.items;
-          if ( feed_items.length > 0 ) {
-            $feed_list.attr( 'data-feed-start', start );
-            $feed_list.empty();
-            feed_items.forEach(function( item ) {
-              $feed_list.append( item );
+        if (response.success) {
+          var feedItems = response.data.items;
+          if (feedItems.length > 0) {
+            $feedList.attr('data-feed-start', start);
+            $feedList.empty();
+            feedItems.forEach(function(item) {
+              $feedList.append(item);
             });
 
             // If there are more items in the feed, enable the "Older" button.
-            if ( response.data.has_more ) {
-              $older_button.removeClass( 'disabled' );
+            if (response.data.has_more) {
+              $olderButton.removeClass('disabled');
             }
 
             // If we're not at the beginning of the feed, make sure the "Newer" button is enabled.
-            if ( start > 0 ) {
-              $newer_button.removeClass( 'disabled' );
+            if (start > 0) {
+              $newerButton.removeClass('disabled');
             }
           } else {
-            console.log( 'That\'s all folks!' );
+            console.log('That\'s all folks!');
           }
         } else {
-          $newer_button.attr( 'class', newer_button_class );
-          $older_button.attr( 'class', older_button_class );
-          console.warn( 'AJAX request failed: ' + response.data );
+          $newerButton.attr('class', newerButtonClass);
+          $olderButton.attr('class', olderButtonClass);
+          console.warn('AJAX request failed: ' + response.data);
         }
       })
-      .fail( function(response) {
+      .fail(function(response) {
         // AJAX request failed.
-        $newer_button.attr( 'class', newer_button_class );
-        $older_button.attr( 'class', older_button_class );
-        console.warn( 'AJAX request failed: Invalid AJAX URL.' );
+        $newerButton.attr('class', newerButtonClass);
+        $olderButton.attr('class', olderButtonClass);
+        console.warn('AJAX request failed: Invalid AJAX URL.');
       })
-      .always( function() {
-        $refresh_button.removeClass( 'fa-spin disabled' );
-        $load_spinner.fadeOut();
+      .always(function() {
+        $refreshButton.removeClass('fa-spin disabled');
+        $loadSpinner.fadeOut();
       });
     } // load()
   };
@@ -113,14 +113,14 @@
    */
   var BTCTicker = {
     load: function() {
-      $( '#bitcoin-ticker-list li' ).click(function( e ) {
+      $('#bitcoin-ticker-list li').click(function(e) {
         e.preventDefault();
-        var $this = $( this );
-        var info = $.parseJSON( $this.attr( 'data-info' ) );
-        $this.siblings().removeClass( 'active' );
-        $this.addClass( 'active' );
+        var $this = $(this);
+        var info = $.parseJSON($this.attr('data-info'));
+        $this.siblings().removeClass('active');
+        $this.addClass('active');
 
-        $( '#bitcoin-ticker-price' ).html( '<span>' + info.cur + '</span>' + info.price );
+        $('#bitcoin-ticker-price').html('<span>' + info.cur + '</span>' + info.price);
       });
     } // load()
   };
@@ -147,20 +147,20 @@
         // JavaScript to be fired on the home page, after the init JS
 
         // Assign all feed box buttons to their respective job.
-        $( '.feed-box' ).each(function() {
-          var $feed_box = $( this );
+        $('.feed-box').each(function() {
+          var $feedBox = $(this);
 
-          $( '.load-older', $feed_box ).click(function( e ) {
+          $('.load-older', $feedBox).click(function(e) {
             e.preventDefault();
-            Feeds.load( $feed_box, 'older' );
+            Feeds.load($feedBox, 'older');
           });
-          $( '.load-newer', $feed_box ).click(function( e ) {
+          $('.load-newer', $feedBox).click(function(e) {
             e.preventDefault();
-            Feeds.load( $feed_box, 'newer' );
+            Feeds.load($feedBox, 'newer');
           });
-          $( '.feed-refresh', $feed_box ).click(function( e ) {
+          $('.feed-refresh', $feedBox).click(function(e) {
             e.preventDefault();
-            Feeds.load( $feed_box, 'refresh' );
+            Feeds.load($feedBox, 'refresh');
           });
         });
       }
