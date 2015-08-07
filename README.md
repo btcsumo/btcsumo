@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/btcsumo/btcsumo.svg?branch=master)](https://travis-ci.org/btcsumo/btcsumo)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/btcsumo/btcsumo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/btcsumo/btcsumo/?branch=master)
+
 #BTC Sumo
 Home of the http://btcsumo.com WordPress site, bringing all your Bitcoin news together.
 
