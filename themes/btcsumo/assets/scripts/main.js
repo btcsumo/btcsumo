@@ -76,7 +76,7 @@
             });
 
             // If there are more items in the feed, enable the "Older" button.
-            if (response.data.has_more) {
+            if (response.data.hasMore) {
               $olderButton.removeClass('disabled');
             }
 
@@ -120,7 +120,9 @@
         $this.siblings().removeClass('active');
         $this.addClass('active');
 
-        $('#bitcoin-ticker-price').html('<span>' + info.cur + '</span>' + info.price);
+        $('#bitcoin-ticker-price').html(
+          '<span>' + info.cur + '</span>' + info.price
+        );
       });
     } // load()
   };
