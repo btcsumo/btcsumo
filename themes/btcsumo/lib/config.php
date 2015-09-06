@@ -10,6 +10,7 @@ use BTCSumo\ConditionalTagCheck;
 add_theme_support( 'soil-clean-up' );     // Enable clean up from Soil.
 add_theme_support( 'soil-js-to-footer' ); // Move all JS to footer.
 add_theme_support( 'soil-disable-asset-versioning' ); // Disable version queries of assets.
+add_theme_support( 'soil-nice-search' ); // Redirects search results from /?s=query to /search/query/, converts %20 to +.
 
 /**
  * Configuration values
@@ -47,7 +48,8 @@ function display_sidebar() {
       [
         'is_404',
         'is_front_page',
-        [ 'is_page', 'about' ]
+        'is_search',
+        [ 'is_page', [ 'about', 'search' ] ]
       ]
     );
 
