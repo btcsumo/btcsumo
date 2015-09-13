@@ -7,16 +7,18 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="<?= esc_url( home_url( '/' ) ); ?>"><img src="<?= Assets\asset_path( 'images/logo.png' ); ?>"></a>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu">
-        <span class="sr-only"><?php esc_html_e( 'Toggle navigation', 'btcsumo' ); ?></span>
-        <span class="fa fa-bars"></span>
-        <span><?php esc_html_e( 'Menu', 'btcsumo' ); ?></span>
-      </button>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-search">
-        <span class="sr-only"><?php esc_html_e( 'Toggle search', 'btcsumo' ); ?></span>
-        <span class="fa fa-search"></span>
-        <span><?php esc_html_e( 'Search', 'btcsumo' ); ?></span>
-      </button>
+      <div class="navbar-buttons">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu">
+	        <span class="sr-only"><?php esc_html_e( 'Toggle navigation', 'btcsumo' ); ?></span>
+	        <span class="fa fa-bars"></span>
+	        <span><?php esc_html_e( 'Menu', 'btcsumo' ); ?></span>
+	      </button>
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-search">
+	        <span class="sr-only"><?php esc_html_e( 'Toggle search', 'btcsumo' ); ?></span>
+	        <span class="fa fa-search"></span>
+	        <span><?php esc_html_e( 'Search', 'btcsumo' ); ?></span>
+	      </button>
+	     </div>
     </div>
 
     <nav id="nav-menu" aria-expanded="false" class="collapse navbar-collapse" role="navigation">
@@ -26,10 +28,6 @@
       }
       ?>
     </nav>
-
-    <div id="nav-search" aria-expanded="false" class="navbar-collapse collapse">
-      <?php get_search_form(); ?>
-    </div>
 
     <div id="bitcoin-ticker" class="btn-group hidden-xs">
     <?php
@@ -58,6 +56,10 @@
       echo $ul;
     }
     ?>
+    </div>
+
+    <div id="nav-search" aria-expanded="false" class="navbar-collapse collapse" role="search">
+      <?php get_search_form(); ?>
     </div>
 
   </div>

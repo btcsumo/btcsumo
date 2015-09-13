@@ -23,13 +23,6 @@
     }
   }
 
-  @media (min-width: $screen-sm-min) {
-    .navbar-nav {
-      bottom: 0;
-      position: absolute;
-    }
-  }
-
   #bitcoin-ticker {
     float: right;
 
@@ -45,6 +38,25 @@
         font-size: .6em;
         margin-right: 4px;
       }
+    }
+  }
+
+  @media (min-width: $screen-sm-min) {
+    .navbar-nav {
+      bottom: 0;
+      position: absolute;
+    }
+
+    #nav-search {
+      clear: right;
+      float: right;
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .navbar-buttons {
+      display: inline-block;
+      float: right;
     }
   }
 }
