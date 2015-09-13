@@ -94,8 +94,7 @@ function render_feed_item( $feed_item, $echo = true ) {
   }
 
   // Render the feed item.
-  set_query_var( 'feed_item', $feed_item );
-  get_template_part( 'templates/feed', 'item' );
+  include locate_template('templates/feed-item.php', false, false);
 
   if ( ! $echo ) {
     return ob_get_clean();
